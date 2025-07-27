@@ -2,6 +2,7 @@
 let currentProducts = [];
 let currentSection = 'productos';
 let productToDelete = null;
+let editingProductId = null; // Nueva variable para rastrear el ID del producto que se está editando
 
 // Cargar productos al iniciar
 document.addEventListener('DOMContentLoaded', () => {
@@ -125,7 +126,9 @@ function getLowestPrice(product) {
 
 // Funciones del modal
 function openAddProductModal() {
+    editingProductId = null; // Reset editing ID when opening add modal
     const modal = document.getElementById('product-modal');
+    document.querySelector('.modal-header h2').textContent = 'Agregar Producto';
     modal.classList.add('active');
 }
 
@@ -133,6 +136,7 @@ function closeModal() {
     const modal = document.getElementById('product-modal');
     modal.classList.remove('active');
     resetForm();
+    editingProductId = null; // Reset editing ID when closing modal
 }
 
 function resetForm() {
@@ -165,7 +169,7 @@ function removeImageUrl(button) {
     }
 }
 
-// Manejo del formulario
+// Actualizar el manejador del formulario
 document.getElementById('product-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     
@@ -194,8 +198,14 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
     };
     
     try {
-        const response = await fetch(`${CONFIG.API_URL}/products`, {
-            method: 'POST',
+        const url = editingProductId 
+            ? `${CONFIG.API_URL}/products/${editingProductId}`
+            : `${CONFIG.API_URL}/products`;
+
+        const method = editingProductId ? 'PUT' : 'POST';
+
+        const response = await fetch(url, {
+            method: method,
             ...window.fetchConfig,
             headers: {
                 ...window.fetchConfig.headers,
@@ -209,19 +219,20 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
             throw new Error(errorData.message || 'Error al guardar el producto');
         }
 
-        // Recargar la página después de guardar exitosamente
+        // Recargar productos después de guardar exitosamente
         await loadProducts();
         closeModal();
-        showSuccess('Producto guardado exitosamente');
+        showSuccess(editingProductId ? 'Producto actualizado exitosamente' : 'Producto guardado exitosamente');
         window.location.reload(); // Forzar recarga de la página
     } catch (error) {
         console.error('Error:', error);
-        showError(`Error al guardar el producto: ${error.message}`);
+        showError(`Error al ${editingProductId ? 'actualizar' : 'guardar'} el producto: ${error.message}`);
     }
 });
 
 // Funciones CRUD
 async function editProduct(id) {
+    editingProductId = id; // Set the ID of the product being edited
     const product = currentProducts.find(p => p._id === id);
     if (!product) return;
 
@@ -256,7 +267,8 @@ async function editProduct(id) {
     document.querySelector('.modal-header h2').textContent = 'Editar Producto';
     
     // Abrir el modal
-    openAddProductModal();
+    const modal = document.getElementById('product-modal');
+    modal.classList.add('active');
 }
 
 async function deleteProduct(id) {
