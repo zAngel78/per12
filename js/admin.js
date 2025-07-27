@@ -79,11 +79,15 @@ function renderProductsTable(products) {
     tbody.innerHTML = '';
 
     products.forEach(product => {
+        const imageUrl = product.images && product.images.length > 0 
+            ? product.images[0].replace('http://localhost:3000', CONFIG.BASE_URL)
+            : 'https://via.placeholder.com/50';
+
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${product._id}</td>
             <td>
-                <img src="${product.images[0]}" alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover;">
+                <img src="${imageUrl}" alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover;">
             </td>
             <td>${product.name}</td>
             <td>${product.category}</td>
@@ -174,16 +178,16 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
                     .filter(url => url.trim() !== ''),
         sizes: {
             sencillo: {
-                normal_price: parseInt(document.querySelector('.size-price:nth-child(1) input:nth-child(2)').value),
-                offer_price: parseInt(document.querySelector('.size-price:nth-child(1) input:nth-child(3)').value)
+                normal_price: parseInt(document.querySelector('.size-price:nth-child(1) input:nth-child(2)').value) || 0,
+                offer_price: parseInt(document.querySelector('.size-price:nth-child(1) input:nth-child(3)').value) || 0
             },
             semidoble: {
-                normal_price: parseInt(document.querySelector('.size-price:nth-child(2) input:nth-child(2)').value),
-                offer_price: parseInt(document.querySelector('.size-price:nth-child(2) input:nth-child(3)').value)
+                normal_price: parseInt(document.querySelector('.size-price:nth-child(2) input:nth-child(2)').value) || 0,
+                offer_price: parseInt(document.querySelector('.size-price:nth-child(2) input:nth-child(3)').value) || 0
             },
             doble: {
-                normal_price: parseInt(document.querySelector('.size-price:nth-child(3) input:nth-child(2)').value),
-                offer_price: parseInt(document.querySelector('.size-price:nth-child(3) input:nth-child(3)').value)
+                normal_price: parseInt(document.querySelector('.size-price:nth-child(3) input:nth-child(2)').value) || 0,
+                offer_price: parseInt(document.querySelector('.size-price:nth-child(3) input:nth-child(3)').value) || 0
             }
         }
     };
@@ -204,9 +208,11 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
             throw new Error(errorData.message || 'Error al guardar el producto');
         }
 
+        // Recargar la página después de guardar exitosamente
         await loadProducts();
         closeModal();
         showSuccess('Producto guardado exitosamente');
+        window.location.reload(); // Forzar recarga de la página
     } catch (error) {
         console.error('Error:', error);
         showError(`Error al guardar el producto: ${error.message}`);
