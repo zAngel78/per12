@@ -1,5 +1,5 @@
 // Constantes
-const API_URL = CONFIG.API_URL;
+// Usar CONFIG.API_URL directamente
 
 // Función para formatear precio
 function formatPrice(price) {
@@ -121,12 +121,12 @@ function updateCartCount() {
 // Funciones para la API
 async function fetchProducts(params = {}) {
     const queryString = new URLSearchParams(params).toString();
-    const response = await fetch(`${API_URL}/products${queryString ? '?' + queryString : ''}`);
+    const response = await fetch(`${CONFIG.API_URL}/products${queryString ? '?' + queryString : ''}`);
     return await response.json();
 }
 
 async function fetchProductById(id) {
-    const response = await fetch(`${API_URL}/products/${id}`);
+    const response = await fetch(`${CONFIG.API_URL}/products/${id}`);
     return await response.json();
 }
 

@@ -1,5 +1,4 @@
 // Variables globales
-const API_URL = CONFIG.API_URL;
 let currentProducts = [];
 let currentSection = 'productos';
 
@@ -51,7 +50,7 @@ function updateMainContent(section) {
 // Función para cargar productos
 async function loadProducts() {
     try {
-        const response = await fetch(`${API_URL}/products`, window.fetchConfig);
+        const response = await fetch(`${CONFIG.API_URL}/products`, window.fetchConfig);
         const data = await response.json();
         currentProducts = data.products;
         renderProductsTable(currentProducts);
@@ -64,7 +63,7 @@ async function loadProducts() {
 // Función para cargar combos
 async function loadCombos() {
     try {
-        const response = await fetch(`${API_URL}/products?category=COMBOS`, window.fetchConfig);
+        const response = await fetch(`${CONFIG.API_URL}/products?category=COMBOS`, window.fetchConfig);
         const data = await response.json();
         currentProducts = data.products;
         renderProductsTable(currentProducts);
@@ -190,7 +189,7 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
     };
     
     try {
-        const response = await fetch(`${API_URL}/products`, {
+        const response = await fetch(`${CONFIG.API_URL}/products`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -252,7 +251,7 @@ async function deleteProduct(id) {
     if (!confirm('¿Estás seguro de que quieres eliminar este producto?')) return;
 
     try {
-        const response = await fetch(`${API_URL}/products/${id}`, {
+        const response = await fetch(`${CONFIG.API_URL}/products/${id}`, {
             method: 'DELETE',
         });
 
