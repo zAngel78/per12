@@ -7,11 +7,9 @@ const CONFIG = {
 // Configuración global para fetch
 window.fetchConfig = {
     mode: 'cors',
-    credentials: 'include',
     headers: {
         'Content-Type': 'application/json',
-        'ngrok-skip-browser-warning': 'true',
-        'Access-Control-Allow-Origin': '*'
+        'ngrok-skip-browser-warning': 'true'
     }
 };
 
