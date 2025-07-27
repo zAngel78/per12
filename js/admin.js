@@ -191,20 +191,25 @@ document.getElementById('product-form').addEventListener('submit', async (e) => 
     try {
         const response = await fetch(`${CONFIG.API_URL}/products`, {
             method: 'POST',
+            ...window.fetchConfig,
             headers: {
-                'Content-Type': 'application/json',
+                ...window.fetchConfig.headers,
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(formData),
+            body: JSON.stringify(formData)
         });
 
-        if (!response.ok) throw new Error('Error al guardar el producto');
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Error al guardar el producto');
+        }
 
         await loadProducts();
         closeModal();
         showSuccess('Producto guardado exitosamente');
     } catch (error) {
         console.error('Error:', error);
-        showError('Error al guardar el producto');
+        showError(`Error al guardar el producto: ${error.message}`);
     }
 });
 
@@ -271,11 +276,33 @@ async function deleteProduct(id) {
 
 // Funciones de notificación
 function showSuccess(message) {
-    // Implementar notificación de éxito
-    alert(message);
+    const notification = document.createElement('div');
+    notification.className = 'notification success';
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span>✓</span>
+            <p>${message}</p>
+        </div>
+    `;
+    showNotification(notification);
 }
 
 function showError(message) {
-    // Implementar notificación de error
-    alert(message);
+    const notification = document.createElement('div');
+    notification.className = 'notification error';
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span>⚠</span>
+            <p>${message}</p>
+        </div>
+    `;
+    showNotification(notification);
+}
+
+function showNotification(notification) {
+    document.body.appendChild(notification);
+    setTimeout(() => {
+        notification.classList.add('fade-out');
+        setTimeout(() => notification.remove(), 500);
+    }, 3000);
 } 
