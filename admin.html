@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrativo - Sueños de Oro</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- Barra superior de WordPress -->
+    <div class="wp-admin-bar">
+        <div class="wp-admin-content">
+            <a href="index.html" class="wp-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 19.5c-5.246 0-9.5-4.254-9.5-9.5S6.754 2.5 12 2.5s9.5 4.254 9.5 9.5-4.254 9.5-9.5 9.5z"/>
+                    <path d="M3.176 12c0 4.146 2.415 7.726 5.907 9.404L4.287 9.879C3.563 10.503 3.176 11.217 3.176 12z"/>
+                    <path d="M12 13.5c-.646 0-1.171-.525-1.171-1.171s.525-1.171 1.171-1.171 1.171.525 1.171 1.171S12.646 13.5 12 13.5z"/>
+                    <path d="M20.824 12c0-4.146-2.415-7.726-5.907-9.404l4.796 11.525c.724-.624 1.111-1.338 1.111-2.121z"/>
+                </svg>
+            </a>
+            <span class="admin-title">Panel Administrativo - Sueños de Oro</span>
+            <a href="index.html" class="view-site">Ver sitio</a>
+        </div>
+    </div>
+
+    <!-- Panel lateral -->
+    <div class="admin-container">
+        <aside class="admin-sidebar">
+            <nav class="admin-menu">
+                <ul>
+                    <li class="menu-item" data-section="productos">
+                        <a href="#productos">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            </svg>
+                            Productos
+                        </a>
+                    </li>
+                    <li class="menu-item" data-section="combos">
+                        <a href="#combos">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                <path d="M3.3 7l8.7 5 8.7-5M12 22V12"/>
+                            </svg>
+                            Combos
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>Productos</h1>
+                <button class="add-button" onclick="openAddProductModal()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 5v14m-7-7h14"/>
+                    </svg>
+                    Agregar Producto
+                </button>
+            </div>
+
+            <!-- Tabla de productos -->
+            <div class="table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-table-body">
+                        <!-- Los productos se cargarán dinámicamente aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal para agregar/editar producto -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Agregar Producto</h2>
+                <button class="close-button" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="product-form" class="admin-form">
+                <div class="form-group">
+                    <label for="product-name">Nombre</label>
+                    <input type="text" id="product-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="product-category">Categoría</label>
+                    <select id="product-category" required>
+                        <option value="COLCHONES">Colchones</option>
+                        <option value="ESPALDARES">Espaldares</option>
+                        <option value="BASE CAMAS">Base Camas</option>
+                        <option value="LENCERIA">Lencería</option>
+                        <option value="COMBOS">Combos</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Descripción</label>
+                    <textarea id="product-description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="product-images">URLs de Imágenes</label>
+                    <div id="image-urls-container">
+                        <div class="image-url-input">
+                            <input type="url" placeholder="URL de la imagen" class="image-url">
+                            <button type="button" class="remove-image-url" onclick="removeImageUrl(this)">×</button>
+                        </div>
+                    </div>
+                    <button type="button" onclick="addImageUrl()" class="add-image-url">+ Agregar otra imagen</button>
+                </div>
+                <div class="form-group">
+                    <label>Precios</label>
+                    <div class="size-prices">
+                        <div class="size-price">
+                            <label>Sencillo</label>
+                            <input type="number" placeholder="Precio normal">
+                            <input type="number" placeholder="Precio oferta">
+                        </div>
+                        <div class="size-price">
+                            <label>Semidoble</label>
+                            <input type="number" placeholder="Precio normal">
+                            <input type="number" placeholder="Precio oferta">
+                        </div>
+                        <div class="size-price">
+                            <label>Doble</label>
+                            <input type="number" placeholder="Precio normal">
+                            <input type="number" placeholder="Precio oferta">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-button" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="save-button">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html> 

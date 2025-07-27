@@ -1,0 +1,395 @@
+/* Estilos generales */
+.admin-body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f2f5;
+}
+
+/* Barra superior de WordPress */
+.wp-admin-bar {
+    background-color: #23282d;
+    color: #fff;
+    padding: 0 16px;
+    height: 32px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.wp-admin-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.wp-logo {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+}
+
+.wp-logo svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.admin-title {
+    margin-left: 16px;
+    font-size: 14px;
+}
+
+.view-site {
+    margin-left: auto;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.view-site:hover {
+    color: #00b9eb;
+}
+
+/* Contenedor principal */
+.admin-container {
+    display: flex;
+    margin-top: 32px;
+    min-height: calc(100vh - 32px);
+}
+
+/* Sidebar */
+.admin-sidebar {
+    width: 200px;
+    background-color: #23282d;
+    padding-top: 20px;
+    position: fixed;
+    height: calc(100vh - 32px);
+}
+
+.admin-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-menu li {
+    margin: 0;
+    padding: 0;
+}
+
+.admin-menu a {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    color: #eee;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.admin-menu a:hover {
+    background-color: #32373c;
+}
+
+.admin-menu li.active a {
+    background-color: #0073aa;
+    color: #fff;
+}
+
+.admin-menu svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+/* Contenido principal */
+.admin-main {
+    flex: 1;
+    padding: 20px;
+    margin-left: 200px;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.admin-header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #23282d;
+}
+
+/* Botones */
+.add-button {
+    display: flex;
+    align-items: center;
+    background-color: #0073aa;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.add-button:hover {
+    background-color: #006291;
+}
+
+.add-button svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+/* Tabla */
+.table-container {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #374151;
+}
+
+.admin-table td {
+    color: #4b5563;
+}
+
+.admin-table img {
+    border-radius: 4px;
+}
+
+/* Botones de acción */
+.edit-button,
+.delete-button {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+    transform: scale(1.1);
+}
+
+.edit-button svg,
+.delete-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.edit-button {
+    color: #0073aa;
+    margin-right: 8px;
+}
+
+.delete-button {
+    color: #dc2626;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #111827;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #6b7280;
+    cursor: pointer;
+}
+
+/* Formulario */
+.admin-form {
+    padding: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="url"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+/* URLs de imágenes */
+.image-urls-container {
+    margin-bottom: 12px;
+}
+
+.image-url-input {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.image-url-input input {
+    flex: 1;
+}
+
+.remove-image-url {
+    background: none;
+    border: none;
+    color: #dc2626;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 8px;
+}
+
+.add-image-url {
+    background: none;
+    border: 1px solid #0073aa;
+    color: #0073aa;
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.add-image-url:hover {
+    background-color: #f0f9ff;
+}
+
+/* Precios por tamaño */
+.size-prices {
+    display: grid;
+    gap: 16px;
+}
+
+.size-price {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    align-items: center;
+}
+
+.size-price label {
+    grid-column: 1 / -1;
+    margin-bottom: 4px;
+}
+
+/* Botones de acción del formulario */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.cancel-button,
+.save-button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.cancel-button {
+    background-color: #fff;
+    border: 1px solid #d1d5db;
+    color: #374151;
+}
+
+.cancel-button:hover {
+    background-color: #f3f4f6;
+}
+
+.save-button {
+    background-color: #0073aa;
+    border: none;
+    color: #fff;
+}
+
+.save-button:hover {
+    background-color: #006291;
+} 
