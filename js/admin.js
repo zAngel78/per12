@@ -264,10 +264,15 @@ async function deleteProduct(id) {
     try {
         const response = await fetch(`${CONFIG.API_URL}/products/${id}`, {
             method: 'DELETE',
+            ...window.fetchConfig
         });
 
-        if (!response.ok) throw new Error('Error al eliminar el producto');
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Error al eliminar el producto');
+        }
 
+        // Recargar productos después de eliminar
         if (currentSection === 'productos') {
             await loadProducts();
         } else if (currentSection === 'combos') {
@@ -276,7 +281,7 @@ async function deleteProduct(id) {
         showSuccess('Producto eliminado exitosamente');
     } catch (error) {
         console.error('Error:', error);
-        showError('Error al eliminar el producto');
+        showError(`Error al eliminar el producto: ${error.message}`);
     }
 }
 
