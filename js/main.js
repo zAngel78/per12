@@ -179,6 +179,9 @@ const createMobileMenu = () => {
 // Inicializar navegación móvil
 const initMobileNav = () => {
     const navContent = document.querySelector('.nav-content');
+    // Solo inicializar si estamos en una página que tiene nav-content
+    if (!navContent) return;
+
     const menuButton = createMobileMenuButton();
     
     // Insertar botón de menú antes del logo
@@ -204,6 +207,10 @@ const initMobileNav = () => {
 
 // Manejar scroll para mostrar/ocultar navegación
 const handleScroll = () => {
+    const nav = document.querySelector('.nav-container');
+    // Solo manejar scroll si existe el nav
+    if (!nav) return;
+
     const currentScroll = window.pageYOffset;
     
     // Mostrar/ocultar nav basado en la dirección del scroll

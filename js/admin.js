@@ -50,7 +50,7 @@ function updateMainContent(section) {
 // Función para cargar productos
 async function loadProducts() {
     try {
-        const response = await fetch(`${CONFIG.API_URL}/products`, window.fetchConfig);
+        const response = await fetch(`${CONFIG.API_URL}/products?admin=true`, window.fetchConfig);
         const data = await response.json();
         currentProducts = data.products;
         renderProductsTable(currentProducts);
@@ -63,7 +63,7 @@ async function loadProducts() {
 // Función para cargar combos
 async function loadCombos() {
     try {
-        const response = await fetch(`${CONFIG.API_URL}/products?category=COMBOS`, window.fetchConfig);
+        const response = await fetch(`${CONFIG.API_URL}/products?category=COMBOS&admin=true`, window.fetchConfig);
         const data = await response.json();
         currentProducts = data.products;
         renderProductsTable(currentProducts);
