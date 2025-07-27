@@ -450,3 +450,107 @@
         opacity: 0;
     }
 } 
+
+/* Modal de confirmación estilo WordPress */
+.wp-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.wp-modal.active {
+    display: flex;
+}
+
+.wp-modal-content {
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    animation: slideIn 0.3s ease-out;
+}
+
+.wp-modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.wp-modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.4;
+    color: #23282d;
+}
+
+.wp-modal-body {
+    padding: 20px;
+    background-color: #f1f1f1;
+}
+
+.wp-modal-body p {
+    margin: 0 0 1em;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #444;
+}
+
+.wp-modal-body p:last-child {
+    margin-bottom: 0;
+}
+
+.wp-modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #ddd;
+    background-color: #f3f3f3;
+    text-align: right;
+}
+
+.wp-button {
+    padding: 8px 12px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-left: 10px;
+    transition: all 0.2s ease;
+}
+
+.wp-button-cancel {
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    color: #555;
+}
+
+.wp-button-cancel:hover {
+    background-color: #eee;
+}
+
+.wp-button-delete {
+    background-color: #dc3232;
+    color: #fff;
+}
+
+.wp-button-delete:hover {
+    background-color: #c92424;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-10%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+} 

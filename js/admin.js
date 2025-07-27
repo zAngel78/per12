@@ -1,6 +1,7 @@
 // Variables globales
 let currentProducts = [];
 let currentSection = 'productos';
+let productToDelete = null;
 
 // Cargar productos al iniciar
 document.addEventListener('DOMContentLoaded', () => {
@@ -99,7 +100,7 @@ function renderProductsTable(products) {
                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                     </svg>
                 </button>
-                <button onclick="deleteProduct('${product._id}')" class="delete-button">
+                <button onclick="showConfirmModal('${product._id}')" class="delete-button">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         <path d="M3 6h18"/>
                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
@@ -316,4 +317,46 @@ function showNotification(notification) {
         notification.classList.add('fade-out');
         setTimeout(() => notification.remove(), 500);
     }, 3000);
+} 
+
+// Funciones para el modal de confirmación
+function showConfirmModal(id) {
+    productToDelete = id;
+    const modal = document.getElementById('confirm-modal');
+    modal.classList.add('active');
+}
+
+function closeConfirmModal() {
+    const modal = document.getElementById('confirm-modal');
+    modal.classList.remove('active');
+    productToDelete = null;
+}
+
+async function confirmDelete() {
+    if (!productToDelete) return;
+    
+    try {
+        const response = await fetch(`${CONFIG.API_URL}/products/${productToDelete}`, {
+            method: 'DELETE',
+            ...window.fetchConfig
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Error al eliminar el producto');
+        }
+
+        // Recargar productos después de eliminar
+        if (currentSection === 'productos') {
+            await loadProducts();
+        } else if (currentSection === 'combos') {
+            await loadCombos();
+        }
+        showSuccess('Producto eliminado exitosamente');
+    } catch (error) {
+        console.error('Error:', error);
+        showError(`Error al eliminar el producto: ${error.message}`);
+    } finally {
+        closeConfirmModal();
+    }
 } 

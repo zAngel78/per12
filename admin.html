@@ -152,6 +152,23 @@
         </div>
     </div>
 
+    <!-- Modal de confirmación estilo WordPress -->
+    <div id="confirm-modal" class="wp-modal">
+        <div class="wp-modal-content">
+            <div class="wp-modal-header">
+                <h2>Confirmar Eliminación</h2>
+            </div>
+            <div class="wp-modal-body">
+                <p>¿Estás seguro de que quieres eliminar este producto?</p>
+                <p>Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="wp-modal-footer">
+                <button class="wp-button wp-button-cancel" onclick="closeConfirmModal()">Cancelar</button>
+                <button class="wp-button wp-button-delete" onclick="confirmDelete()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="js/config.js"></script>
     <script src="js/main.js"></script>
