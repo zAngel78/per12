@@ -13,5 +13,27 @@ window.fetchConfig = {
     }
 };
 
+// Función para cargar imágenes con el header de ngrok
+window.loadImage = function(url) {
+    return fetch(url, {
+        headers: {
+            'ngrok-skip-browser-warning': 'true'
+        }
+    })
+    .then(response => response.blob())
+    .then(blob => URL.createObjectURL(blob));
+};
+
 // Hacer CONFIG disponible globalmente
-window.CONFIG = CONFIG; 
+window.CONFIG = CONFIG;
+
+// Interceptar todas las imágenes para agregar el header de ngrok
+document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('img[src*="ngrok-free.app"]');
+    images.forEach(img => {
+        const originalSrc = img.src;
+        window.loadImage(originalSrc).then(url => {
+            img.src = url;
+        });
+    });
+}); 

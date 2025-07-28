@@ -18,7 +18,7 @@ function navigateToProduct(productId) {
 }
 
 // Función para crear una tarjeta de producto
-function createProductCard(product) {
+async function createProductCard(product) {
     // Crear el contenedor principal
     const card = document.createElement('div');
     card.className = 'product-card';
@@ -29,9 +29,20 @@ function createProductCard(product) {
     imageContainer.className = 'product-image';
 
     const image = document.createElement('img');
-    image.src = product.images && product.images.length > 0
-        ? product.images[0]
-        : 'https://via.placeholder.com/300x300?text=No+imagen';
+    const defaultImage = 'https://via.placeholder.com/300x300?text=No+imagen';
+    
+    if (product.images && product.images.length > 0) {
+        try {
+            const imageUrl = await window.loadImage(product.images[0]);
+            image.src = imageUrl;
+        } catch (error) {
+            console.error('Error loading image:', error);
+            image.src = defaultImage;
+        }
+    } else {
+        image.src = defaultImage;
+    }
+    
     image.alt = product.name;
     imageContainer.appendChild(image);
 
