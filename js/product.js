@@ -126,14 +126,17 @@ async function loadProductDetails() {
         
         Object.entries(product.sizes).forEach(([size, details]) => {
             const discount = calculateDiscount(details.normal_price, details.offer_price);
+            const dimensionsHtml = details.dimensions ? 
+                `<span class="size-dimensions">
+                    ${details.dimensions.largo || 0}x${details.dimensions.ancho || 0}x${details.dimensions.altura || 0} cm
+                </span>` : '';
+            
             sizeOptionsElement.innerHTML += `
                 <div class="size-option" data-size="${size}">
                     <input type="radio" name="size" id="size-${size}" value="${size}">
                     <label for="size-${size}">
                         <span class="size-name">${size.toUpperCase()}</span>
-                        <span class="size-dimensions">
-                            ${details.dimensions.largo}x${details.dimensions.ancho}x${details.dimensions.altura} cm
-                        </span>
+                        ${dimensionsHtml}
                         <span class="size-price">
                             <span class="offer-price">${formatPrice(details.offer_price)}</span>
                             <span class="original-price">${formatPrice(details.normal_price)}</span>
