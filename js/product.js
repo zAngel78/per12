@@ -85,40 +85,66 @@ async function loadProductDetails() {
         
         console.log('Imágenes del producto:', product.images); // Debug log
         
-        product.images.forEach(imageUrl => {
-            galleryMainElement.innerHTML += `
-                <div class="swiper-slide">
-                    <img src="${imageUrl}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/400x400?text=No+imagen'">
-                </div>
-            `;
-            
-            galleryThumbsElement.innerHTML += `
-                <div class="swiper-slide">
-                    <img src="${imageUrl}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/100x100?text=No+imagen'">
-                </div>
-            `;
-        });
-
-        // Inicializar los carruseles de Swiper
-        console.log('Inicializando Swiper...'); // Debug log
-        const galleryThumbs = new Swiper('.gallery-thumbs', {
-            spaceBetween: 10,
-            slidesPerView: 4,
-            freeMode: true,
-            watchSlidesVisibility: true,
-            watchSlidesProgress: true,
-        });
-
-        const galleryMain = new Swiper('.gallery-main', {
-            spaceBetween: 10,
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            thumbs: {
-                swiper: galleryThumbs
+        // Función auxiliar para cargar imágenes
+        async function loadProductImages() {
+            for (const imageUrl of product.images) {
+                try {
+                    const processedImageUrl = await window.loadImage(imageUrl);
+                    
+                    galleryMainElement.innerHTML += `
+                        <div class="swiper-slide">
+                            <img src="${processedImageUrl}" alt="${product.name}">
+                        </div>
+                    `;
+                    
+                    galleryThumbsElement.innerHTML += `
+                        <div class="swiper-slide">
+                            <img src="${processedImageUrl}" alt="${product.name}">
+                        </div>
+                    `;
+                } catch (error) {
+                    console.error('Error al cargar imagen:', error);
+                    // Usar imagen placeholder en caso de error
+                    const placeholderUrl = 'https://via.placeholder.com/400x400?text=No+imagen';
+                    
+                    galleryMainElement.innerHTML += `
+                        <div class="swiper-slide">
+                            <img src="${placeholderUrl}" alt="${product.name}">
+                        </div>
+                    `;
+                    
+                    galleryThumbsElement.innerHTML += `
+                        <div class="swiper-slide">
+                            <img src="${placeholderUrl}" alt="${product.name}">
+                        </div>
+                    `;
+                }
             }
-        });
+
+            // Inicializar los carruseles de Swiper después de cargar las imágenes
+            console.log('Inicializando Swiper...'); // Debug log
+            const galleryThumbs = new Swiper('.gallery-thumbs', {
+                spaceBetween: 10,
+                slidesPerView: 4,
+                freeMode: true,
+                watchSlidesVisibility: true,
+                watchSlidesProgress: true,
+            });
+
+            const galleryMain = new Swiper('.gallery-main', {
+                spaceBetween: 10,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                thumbs: {
+                    swiper: galleryThumbs
+                }
+            });
+        }
+
+        // Cargar las imágenes
+        await loadProductImages();
 
         // Mostrar las opciones de tamaño
         sizeOptionsElement.innerHTML = '';

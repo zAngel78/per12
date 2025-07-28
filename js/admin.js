@@ -55,7 +55,7 @@ async function loadProducts() {
         const response = await fetch(`${CONFIG.API_URL}/products?admin=true`, window.fetchConfig);
         const data = await response.json();
         currentProducts = data.products;
-        renderProductsTable(currentProducts);
+        await renderProductsTable(currentProducts);
     } catch (error) {
         console.error('Error al cargar productos:', error);
         showError('Error al cargar los productos');
@@ -68,7 +68,7 @@ async function loadCombos() {
         const response = await fetch(`${CONFIG.API_URL}/products?category=COMBOS&admin=true`, window.fetchConfig);
         const data = await response.json();
         currentProducts = data.products;
-        renderProductsTable(currentProducts);
+        await renderProductsTable(currentProducts);
     } catch (error) {
         console.error('Error al cargar combos:', error);
         showError('Error al cargar los combos');
@@ -76,14 +76,20 @@ async function loadCombos() {
 }
 
 // Función para renderizar la tabla de productos
-function renderProductsTable(products) {
+async function renderProductsTable(products) {
     const tbody = document.getElementById('products-table-body');
     tbody.innerHTML = '';
 
-    products.forEach(product => {
-        const imageUrl = product.images && product.images.length > 0 
-            ? product.images[0].replace('http://localhost:3000', CONFIG.BASE_URL)
-            : 'https://via.placeholder.com/50';
+    for (const product of products) {
+        let imageUrl = 'https://via.placeholder.com/50';
+        
+        if (product.images && product.images.length > 0) {
+            try {
+                imageUrl = await window.loadImage(product.images[0]);
+            } catch (error) {
+                console.error('Error al cargar imagen:', error);
+            }
+        }
 
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -111,7 +117,7 @@ function renderProductsTable(products) {
             </td>
         `;
         tbody.appendChild(row);
-    });
+    }
 }
 
 // Funciones de utilidad
