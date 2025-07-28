@@ -18,7 +18,7 @@ function navigateToProduct(productId) {
 }
 
 // Función para crear una tarjeta de producto
-async function createProductCard(product) {
+window.createProductCard = async function(product) {
     // Crear el contenedor principal
     const card = document.createElement('div');
     card.className = 'product-card';

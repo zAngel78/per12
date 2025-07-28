@@ -203,5 +203,17 @@
     <script src="js/config.js"></script>
     <script src="js/main.js"></script>
     <script src="js/products.js"></script>
+    <script>
+        // Inicializar la página después de que todos los scripts estén cargados
+        window.addEventListener('load', () => {
+            if (typeof createProductCard === 'function') {
+                initializeFiltersFromURL();
+                setupFilterEvents();
+                loadProducts();
+            } else {
+                console.error('Error: createProductCard no está definida');
+            }
+        });
+    </script>
 </body>
 </html> 
